@@ -7,9 +7,9 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 # Database Config
-app.config['MYSQL_HOST'] = "localhost"
-app.config['MYSQL_USER'] = "root"
-app.config['MYSQL_PASSWORD'] = "James"
+app.config['MYSQL_HOST'] = "shadowrobotofficial.mysql.pythonanywhere-services.com"
+app.config['MYSQL_USER'] = "shadowrobotoffic"
+app.config['MYSQL_PASSWORD'] = "JamesMYSQL"
 app.config['MYSQL_DB'] = 'shadowrobot'
 app.config['MYSQL_SSL'] = {'ssl': {'verify_ssl': False}}  # Disable SSL verification
 app.config['SECRET_KEY'] = 'Jamiecoo202'
